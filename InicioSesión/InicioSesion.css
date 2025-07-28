@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Grechen+Fuemen&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,600&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+body{
+    font-family: "Poppins", sans-serif;
+    background-color: var(--base-color);
+}
+.contenido{
+    display: grid;
+    min-height: 100dvh;
+    grid-template-rows: 
+    auto 1fr auto;
+} 
+
+:root{
+    --base-color: #e8f0ff;
+    --primary-color:#244696;
+    --primary-color-dark: #06358C;
+    --secondary-color: #51A81B;
+    --secondary-color-dark: #397e2d;
+    --text-dark:#093d26;
+    --text-light: #9ECA8B;
+    --text-light-secondary: #6578B6;
+    --text-dark-secondary:#011e53;
+    --extra-light: #EBECFA;
+}
+a{text-decoration: none; }
+ul{list-style: none;}
+h1{font-size: 2rem;}
+h2{font-size: 1.8rem;}
+h3{font-size: 1.5rem;}
+p{font-size: 1rem;}
+
+button{
+    padding: 0.7rem;
+    border-radius: 20px;
+    background-color: var(--text-dark-secondary);
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+button:hover{
+    border: 2.5px solid var(--primary-color);
+    background-color: var(--primary-color);
+    transition: 0.1s;
+    color: var(--extra-light);;
+}
+
+#login {
+    display: flex;
+    
+}
+
+#error {
+    padding-top: 1rem;
+    color: rgb(199, 43, 43);
+}
+
+
