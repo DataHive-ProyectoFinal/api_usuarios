@@ -16,3 +16,4 @@ if ($accion === 'aceptar') {
     exit();
 }
 ?>
+

@@ -9,7 +9,7 @@
   <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md">
     <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Ingreso de Socios</h2>
 
-    <form action="procesar_login.php" method="POST" class="space-y-4">
+    <form action="/prueba%20proyecto/api_usuarios/procesar_login.php" method="POST" class="space-y-4">
       <div>
         <label for="ci" class="block text-gray-700 font-medium">Cédula de Identidad:</label>
         <input type="text" name="ci" id="ci" required

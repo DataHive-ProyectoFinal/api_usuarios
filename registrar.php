@@ -62,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <p class="text-red-700 bg-red-100 p-4 rounded-lg mb-6"><?= htmlspecialchars($mensaje) ?></p>
         <?php endif; ?>
 
-        <!-- 🔗 Acá va el link al Home -->
+        
         <a href="/Frontend/landingPage/Home.html"
            class="inline-block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
            Volver al inicio

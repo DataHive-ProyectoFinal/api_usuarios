@@ -68,7 +68,7 @@ $resultado = $conexion->query($sql);
                                 <td class="px-3 py-2 border"><?= htmlspecialchars($fila['fecha_solicitud']) ?></td>
                                 <td class="px-3 py-2 border">
                                     <div class="flex gap-2 items-center">
-                                        <a href="asignar_contrasena.php?id=<?= $fila['id'] ?>"
+                                        <a href="/prueba%20proyecto/api_usuarios/asignar_contrasena.php?id=<?= $fila['id'] ?>"
                                            class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-sm">
                                             Aceptar
                                         </a>

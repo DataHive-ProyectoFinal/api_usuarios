@@ -5,3 +5,4 @@ $usuario = "root";
 $contrasena = "";
 $base_de_datos = "cooperativa";
 ?>
+

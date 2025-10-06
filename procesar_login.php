@@ -18,7 +18,7 @@ if ($result->num_rows === 1) {
         $_SESSION['ci'] = $usuario['ci'];
         $_SESSION['rol'] = 'socio'; 
 
-        header("Location: interfaz_socio.php");
+        header("Location:/prueba%20proyecto/api_usuarios/VerPerfil.php");
         exit;
     } else {
         $error = "Contraseña incorrecta.";
@@ -49,3 +49,4 @@ $conexion->close();
   </div>
 </body>
 </html>
+

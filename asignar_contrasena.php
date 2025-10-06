@@ -2,9 +2,9 @@
 require_once 'conexion.php';
 
 $id = $_GET['id'] ?? null;
-if (!$id) {
-    die("ID inválido");
-}
+//if (!$id) {
+//    die("ID inválido");
+//}
 
 $stmt = $conexion->prepare("SELECT nombre_completo, ci, gmail FROM solicitudes_ingreso WHERE id = ?");
 $stmt->bind_param("i", $id);
