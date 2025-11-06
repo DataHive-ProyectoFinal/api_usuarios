@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Panel de Solicitudes - Cooperativa Vista Linda</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen p-8">
+  <h2 class="text-2xl font-bold text-center mb-6 text-blue-700">Solicitudes Pendientes</h2>
+
+  <div class="overflow-x-auto">
+    <table class="w-full bg-white shadow-md rounded-lg">
+      <thead class="bg-blue-600 text-white">
+        <tr>
+          <th class="py-3 px-4">CI</th>
+          <th class="py-3 px-4">Nombre</th>
+          <th class="py-3 px-4">Nacimiento</th>
+          <th class="py-3 px-4">Correo</th>
+          <th class="py-3 px-4">Tel. Celular</th>
+          <th class="py-3 px-4">Dirección</th>
+          <th class="py-3 px-4">Familia</th>
+          <th class="py-3 px-4">Ocupación</th>
+          <th class="py-3 px-4">Ingreso</th>
+          <th class="py-3 px-4">Motivo</th>
+          <th class="py-3 px-4">Acciones</th>
+        </tr>
+      </thead>
+      <tbody id="tabla-solicitudes" class="text-center"></tbody>
+    </table>
+  </div>
+
+  <!-- Modal para aceptar solicitud -->
+  <div id="modal" class="fixed inset-0 bg-gray-800 bg-opacity-50 hidden items-center justify-center">
+    <div class="bg-white p-6 rounded-lg shadow-md w-96">
+      <h3 class="text-xl font-semibold mb-4 text-center text-blue-700">Aceptar Solicitud</h3>
+      <form id="form-aceptar">
+        <div class="mb-3">
+          <label class="block text-sm font-medium">Cédula</label>
+          <input type="text" id="ci" name="ci" class="w-full border rounded px-2 py-1" readonly>
+        </div>
+        <div class="mb-3">
+          <label class="block text-sm font-medium">Contraseña generada</label>
+          <input type="text" id="contrasena" name="contrasena" class="w-full border rounded px-2 py-1" readonly>
+        </div>
+        <div class="flex justify-end gap-2">
+          <button type="button" onclick="cerrarModal()" class="px-3 py-1 bg-gray-400 text-white rounded">Cancelar</button>
+          <button type="submit" class="px-3 py-1 bg-green-600 text-white rounded">Enviar correo</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    async function cargarSolicitudes() {
+      const respuesta = await fetch("../controlador/solicitudController.php?action=listar");
+      const solicitudes = await respuesta.json();
+
+      const tbody = document.querySelector("#tabla-solicitudes");
+      tbody.innerHTML = "";
+
+      solicitudes.forEach(s => {
+        const fila = document.createElement("tr");
+        fila.classList.add("border-b", "hover:bg-gray-100");
+        fila.innerHTML = `
+          <td class="py-2 px-4">${s.ci}</td>
+          <td class="py-2 px-4">${s.nombre_completo}</td>
+          <td class="py-2 px-4">${s.fecha_nacimiento}</td>
+          <td class="py-2 px-4">${s.gmail}</td>
+          <td class="py-2 px-4">${s.telefono_celular}</td>
+          <td class="py-2 px-4">${s.direccion}</td>
+          <td class="py-2 px-4">${s.cantidad_familia}</td>
+          <td class="py-2 px-4">${s.ocupacion}</td>
+          <td class="py-2 px-4">${s.ingreso}</td>
+          <td class="py-2 px-4">${s.motivo_interes}</td>
+          <td class="py-2 px-4">
+            <button onclick="abrirModal('${s.ci}')" class="bg-green-500 hover:bg-green-600 text-white py-1 px-3 rounded mr-2">Aceptar</button>
+            <button onclick="procesar('${s.ci}', 'rechazar')" class="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded">Rechazar</button>
+          </td>
+        `;
+        tbody.appendChild(fila);
+      });
+    }
+
+    async function abrirModal(ci) {
+      const respuesta = await fetch(`../controlador/solicitudController.php?ci=${ci}`);
+      const data = await respuesta.json();
+      document.getElementById("ci").value = data.ci;
+      document.getElementById("contrasena").value = data.contrasena_generada;
+      document.getElementById("modal").classList.remove("hidden");
+      document.getElementById("modal").classList.add("flex");
+    }
+
+    function cerrarModal() {
+      document.getElementById("modal").classList.add("hidden");
+    }
+
+    document.getElementById("form-aceptar").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const ci = document.getElementById("ci").value;
+      const contrasena = document.getElementById("contrasena").value;
+
+      const formData = new FormData();
+      formData.append("ci", ci);
+      formData.append("action", "aceptar");
+      formData.append("contrasena", contrasena);
+
+      const res = await fetch("../controlador/procesar_solicitud.php", {
+        method: "POST",
+        body: formData
+      });
+
+      const text = await res.text();
+      alert(text);
+      cerrarModal();
+      cargarSolicitudes();
+    });
+
+    async function procesar(ci, accion) {
+      const formData = new FormData();
+      formData.append("ci", ci);
+      formData.append("action", accion);
+
+      const respuesta = await fetch("../controlador/procesar_solicitud.php", {
+        method: "POST",
+        body: formData
+      });
+
+      const resultado = await respuesta.text();
+      alert(resultado);
+      cargarSolicitudes();
+    }
+
+    cargarSolicitudes();
+  </script>
+</body>
+</html>
